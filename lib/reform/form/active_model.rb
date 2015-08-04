@@ -83,7 +83,11 @@ module Reform::Form::ActiveModel
       if model_options
         form_name = model_options.first.to_s.camelize
       else
-        form_name = name.sub(/(::)?Form$/, "") # Song::Form => "Song"
+        if name
+          form_name = name.sub(/(::)?Form$/, "") # Song::Form => "Song"
+        else # anonymous forms. let's drop AM and forget about all this.
+          form_name = "reform"
+        end
       end
 
       active_model_name_for(form_name)
